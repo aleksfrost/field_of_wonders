@@ -1,2 +1,2 @@
-# field_of_wanders
+# field_of_wonders
 Graduation project

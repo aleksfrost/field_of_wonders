@@ -1,4 +1,5 @@
 import random
+import users
 
 #список подарков на барабане
 gifts = ["Зубная щетка", "Стейк 'Рибай'", "Кружка", "Мыльница", "Бритва", "Колбаса"]
@@ -21,15 +22,19 @@ drum = list()
 drum.extend(gifts)
 drum.extend(scores)
 
-#Вращаем барабан
+#Вращаем барабан. Если забирает приз - конец, если отказ от приза - снова крутим, если очки - угадываем
 
-def make_a_turn():
-    turn = random.choice(drum)
-    print(f"На барабане выпало: {turn}")
-    #return turn
-
-
-"""
-for _ in range(10):
-    make_a_turn()
-"""
+def make_a_turn(user):
+    is_prise_taken = False
+    while not is_prise_taken:
+        turn = random.choice(drum)
+        print(f"На барабане выпало: {turn}")
+        if isinstance(turn, int):
+            break
+        else:
+            to_play = input(f"Забираешь приз или продолжить? д/н: ")
+            if to_play == "д":
+                users.pref_update(user, turn)
+                turn = "prise"
+                is_prise_taken = True
+    return turn

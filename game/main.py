@@ -21,7 +21,7 @@ word, description, word_to_show = words.word_to_guess()
 is_not_guessed = True
 round_score = 0
 while(is_not_guessed):
-    print(f"------Раунд 1------")
+    print(f"-------Вращаем барабан-------")
     print(f"Задание: {description}")
     print(f"Слово: {word_to_show}")
     turn = drum.make_a_turn(user)

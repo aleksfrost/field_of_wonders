@@ -28,7 +28,7 @@ def make_a_turn(user):
     is_prise_taken = False
     while not is_prise_taken:
         turn = random.choice(drum)
-        print(f"На барабане выпало: {turn}")
+        print(f"На барабане выпало:    {turn}")
         if isinstance(turn, int):
             break
         else:

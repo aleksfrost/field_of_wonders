@@ -35,5 +35,4 @@ def pref_update(user: str, pref: str):
     users[user][1].append(pref)
 
 def scores_update(user: str, scores: int):
-    print(f"update {users.get(user)[0]} + {scores}")
     users[user] = (users.get(user)[0] + scores, users.get(user)[1])

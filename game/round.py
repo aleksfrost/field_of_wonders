@@ -18,7 +18,6 @@ def guess_letter(word: str, word_to_show: str, letter: str, turn: int):
                 else:
                     word_fabric.append("*")
         word_to_show = "".join(word_fabric)
-        print(f'scores = {count} * {turn}')
         scores = count * turn
     else:
         scores = 0

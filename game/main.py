@@ -2,6 +2,7 @@ import drum
 import words
 import users
 import round
+from prises import prises
 
 
 #Коллекция раундов
@@ -11,9 +12,15 @@ field_of_wonders = list()
 #Авторизация
 current_user = input("Добро пожаловать! Введи имя или 'Enter' для входа под гостем: ")
 if current_user:
-    user = users.get_user(current_user)
+    match current_user:
+        case "admin":
+            raise SystemExit
+        case "market":
+            raise SystemExit
+        case _:
+            user = users.auth_user(current_user)
 else:
-    user = users.get_user("guest")
+    user = users.auth_user("guest")
 
 
 #Запуск главного сценария
@@ -55,3 +62,13 @@ while(is_not_guessed):
                 if "*" not in word_to_show:
                     is_not_guessed = False
 print(f"Победа! Загаданное слово: {word}")
+
+print()
+print()
+users.get_user_points(user)
+
+print()
+print("Доступны для обмена скидки:")
+for prise in prises:
+    pr = prises[prise]
+    print(f"{prise}, стоимость баллов: {pr[0]}, скидка: {pr[1]}")

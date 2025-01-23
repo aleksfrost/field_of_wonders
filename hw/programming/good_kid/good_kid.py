@@ -19,15 +19,11 @@ print(*res, sep="\n")
 """
 
 #Algorithm "add +1 to minimum"   (108 mc)
-res = []
-a = int(input())
-for _ in range(a):
-    _ = input()
-    product_arr = []
+for _ in range(int(input())):
+    input()
     arr = sorted([int(x) for x in input().split()])
     arr.append(arr.pop(0) + 1)
-    res.append(math.prod(arr))
-print(*res, sep="\n")
+    print(math.prod(arr))
 
 
 #Output

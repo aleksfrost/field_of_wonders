@@ -1,5 +1,9 @@
 import math
-
+for _ in range(int(input())):
+    input()
+    arr = sorted([int(x) for x in input().split()])
+    arr.append(arr.pop(0) + 1)
+    print(math.prod(arr))
 #BruteForce   (140 mc)
 """res = []
 a = int(input())

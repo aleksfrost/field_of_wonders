@@ -110,19 +110,22 @@ with open(r'hw\parce_csv\Export.csv', mode='r', encoding='utf-8') as file:
         markets.append([market_id, market_name, street_id, zip_id, coord_id])
 
         #fill cities, states, countries
+        #fill relation city - zip
         city_zip = [zip_id, market_city]
         if city_zip not in cities:
             cities.append(city_zip)
 
+        #fill relation state - zip
         state_zip = [zip_id, market_state]
         if city_zip not in states:
             states.append(state_zip)
 
+        #fill relation country - zip
         countrie_zip = [zip_id, market_country]
         if countrie_zip not in countries:
             countries.append(countrie_zip)
 
-        #fill date time openings
+        #fill date adn time when market is open
         for data, dtime in (zip((s1_date, s2_date, s3_date, s4_date), (s1_time, s2_time, s3_time, s4_time))):
             if data:
                 temp = [clr_data.strip() for clr_data in data.split("to")]
@@ -171,7 +174,7 @@ with open(r'hw\parce_csv\Export.csv', mode='r', encoding='utf-8') as file:
                     market_season.append([season_id, market_id])
 
 
-
+        # fill locations
         if location in locations:
             location_id = locations.index(location)
         else:
@@ -181,7 +184,7 @@ with open(r'hw\parce_csv\Export.csv', mode='r', encoding='utf-8') as file:
         market_locations.append([location_id, market_id])
 
 
-        #Format UPD timestamp
+        #Format and fill UPD timestamp
 
         if "AM" in upd_time or "PM" in upd_time:
             converted_time = datetime.strptime(upd_time, "%m/%d/%Y %I:%M:%S %p").strftime("%Y-%m-%d %H:%M:%S")
@@ -196,7 +199,7 @@ with open(r'hw\parce_csv\Export.csv', mode='r', encoding='utf-8') as file:
 
         market_updates.append([upd_id, market_id])
 
-
+    #write files mentioned
     with open(r'hw\parce_csv\markets_merch.csv', 'w', encoding='utf-8', newline='') as out_file:
         csv.writer(out_file).writerows(markets_merch)
 

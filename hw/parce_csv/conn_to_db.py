@@ -1,4 +1,8 @@
 import psycopg2
+from psycopg2 import Error
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
+from parcer import parce_csv
 
 
 USER = 'farmer'
@@ -15,20 +19,12 @@ connection = psycopg2.connect(
     database=DB_NAME
 )
 
-def get_request(request):
+def make_request(request):
     cursor = connection.cursor()
     cursor.execute(request)
     return cursor
 
-
-def put_request(request):
-    cursor = connection.cursor()
-    cursor.execute(request)
-    connection.commit()
-
-
-
-record = get_request(
+record = make_request(
     f"""select market_id, market_name, country_name, city_name
         from markets
         join zips on markets.zip_id=zips.zip_id

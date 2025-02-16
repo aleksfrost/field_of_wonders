@@ -1,47 +1,74 @@
 #Список пользователей
 #Имя : очки, [список выбранных скидок]
 
-users = {
-    "guest":(0, list()),
-}
+from database.db import request_into_db, request_from_db
+
+
+class User:
+
+    def __init__(self, id=None, name=None, is_admin=False):
+        self.user_id = id
+        self.user_name = name
+        self.is_admin = is_admin
+
 
 #Список пользователей
-def get_users():
-    return list(users)
+def get_users() -> list:
+    stmnt = f"""
+            select * from users;
+            """
+    res = request_from_db(stmnt)
+    users = [User(id = r[0], name=r[1], is_admin=r[3]) for r in res]
+    return users
 
+#Поиск пользователя
+def get_user(name: str, password: str) -> User:
+    stmnt = f"""
+            select user_id, user_name, is_admin
+            from users
+            where user_name = '{name}' and password = '{password}';
+            """
+    res = request_from_db(stmnt)[0]
+    user = User(*res)
 
-#Данные пользователя
-def auth_user(name: str):
-    user = users.get(name)
-    if user:
-        print(f"Игрок: {name}",
-            f"Доступные очки: {users[name][0]}",
-            f"Предпочтения: {users[name][1]}",
-            sep="\n"
-        )
-        return name
-    else:
-        add_user(name)
-
-def get_user_points(name):
-    user = users.get(name)
-    print(f"Игрок: {name}")
-    print(f"Доступные для обмена очки: {user[0]}")
-
-def get_users_stats():
-    for user in users:
-        print(f"Пользователь: {user}")
-        print(f"Предпочтения: {user[1]}")
+    return user
 
 #Добавление пользователя
-def add_user(name: str):
-    users[name] = (0, list())
-    print(f"Игрок '{name}' добавлен. Начинаем...")
-    new_user = auth_user(name)
-    return new_user
+def add_user(name: str, password: str) -> User:
+    stmnt = f"""
+            insert into users(user_name, password)
+            values('{name}', '{password}');
+            """
+    request_into_db(stmnt)
+    user = get_user(name, password)
+    print(f"Игрок '{user.user_name}' добавлен.")
+    return user
 
-def pref_update(user: str, pref: str):
-    users[user][1].append(pref)
+#Авторизация
+def auth_user(name: str, password: str) -> User:
+    if name is None:
+        name = 'guest'
+        password = None
+    stmnt = f"""
+            select user_id, user_name, is_admin
+            from users
+            where user_name = '{name}' and "password" = '{password}';
+            """
+    res = request_from_db(stmnt)
+    if res:
+        user = User(*res[0])
+        print(user.__dict__)
+        print(f"Игрок '{user.user_name}' найден.")
+    else:
+        user = add_user(name, password)
+    return user
 
-def scores_update(user: str, scores: int):
-    users[user] = (users.get(user)[0] + scores, users.get(user)[1])
+#Подсчет очков пользователя
+def get_user_points(name):
+    pass
+
+#Подсчет статистики пользователей
+def get_users_stats():
+    pass
+
+#print(*get_users(), sep='\n')

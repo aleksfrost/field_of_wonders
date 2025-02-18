@@ -6,12 +6,9 @@ from round import Round, add_round, gues_the_word, guess_letter
 from prises import get_prise
 from database.db import request_into_db, request_from_db
 import tables_script
+from gui_tkinter.gui_fow import root
 
-
-
-#Коллекция раундов
-field_of_wonders = list()
-
+fow = root()
 
 #Авторизация
 #Возвращает User(user_id, user_name, is_admin)

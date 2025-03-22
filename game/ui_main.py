@@ -176,7 +176,7 @@ class MainWindow(QMainWindow):
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
 
-        file = open(os.path.curdir + "/drum.gif", "rb")
+        file = open(os.path.curdir + "/game/drum.gif", "rb")
         ba = file.read()
         self.buffer = QBuffer()
         self.buffer.setData(ba)
@@ -298,7 +298,7 @@ class MainWindow(QMainWindow):
         self.gues_w_button.hide()
 
 app = QApplication(sys.argv)
-ico = QtGui.QIcon(os.path.curdir + "/fow.ico")
+ico = QtGui.QIcon(os.path.curdir + "/game/fow.ico")
 app.setWindowIcon(ico)
 w = MainWindow()
 w.show()

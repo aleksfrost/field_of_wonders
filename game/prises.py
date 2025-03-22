@@ -1,5 +1,5 @@
 
-from database.db import request_from_db
+from database.db import request_from_db, request_into_db
 
 
 class Prise:
@@ -38,9 +38,25 @@ def get_prise(prise):
     prise = Prise(*request_from_db(stmnt)[0])
     return prise
 
-"""
-prises_to_add = (
-    ('Журнал "Мурзилка" Подписка на год', 15, 'Подписки', 15),
-    ('Колбаса рогакопытская, шт', 75, 'Бакалея', 50),
-    ('Блендер "Здравствуй старость!"', 25, 'Техника для дома', 30),
-    )"""
+def add_prise(prise_description, price_in_scores, categorie, discount_value):
+    stmnt = f"""
+            select * from categories
+            where categorie_name = {categorie}
+            ;
+            """
+    cat_id = request_from_db(stmnt)[0][0]
+    if cat_id:
+        stmnt = f"""
+                insert into prises (prise_description, price_in_scores, discount_value, categorie_id)
+                values
+                ({prise_description}, {price_in_scores}, {discount_value}, {cat_id})
+                ;
+                """
+        request_into_db(stmnt)
+    else:
+        stmnt = f"""
+                insert into categories (categorie_name)
+                values ({categorie})
+                """
+        request_into_db
+        add_prise(prise_description, price_in_scores, categorie, discount_value)

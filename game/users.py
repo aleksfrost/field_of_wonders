@@ -1,6 +1,7 @@
 #Список пользователей
 #Имя : очки, [список выбранных скидок]
 
+import hashlib
 from database.db import request_into_db, request_from_db
 
 
@@ -35,24 +36,32 @@ def get_user(name: str, password: str) -> User:
 
 #Добавление пользователя
 def add_user(name: str, password: str) -> User:
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
     stmnt = f"""
             insert into users(user_name, password)
-            values('{name}', '{password}');
+            values('{name}', '{hashed_password}');
             """
     request_into_db(stmnt)
-    user = get_user(name, password)
+    user = get_user(name, hashed_password)
     print(f"Игрок '{user.user_name}' добавлен.")
     return user
 
 #Авторизация
 def auth_user(name: str, password: str) -> User:
-    if name is None:
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    if name == "":
         name = 'guest'
-        password = None
-    stmnt = f"""
+        password = 'guest'
+        stmnt = f"""
+                select user_id, user_name, is_admin
+                from users
+                where user_name = '{name}';
+                """
+    else:
+        stmnt = f"""
             select user_id, user_name, is_admin
             from users
-            where user_name = '{name}' and "password" = '{password}';
+            where user_name = '{name}' and "password" = '{hashed_password}';
             """
     res = request_from_db(stmnt)
     if res:
@@ -60,7 +69,10 @@ def auth_user(name: str, password: str) -> User:
         print(user.__dict__)
         print(f"Игрок '{user.user_name}' найден.")
     else:
-        user = add_user(name, password)
+        try:
+            user = add_user(name, password)
+        except Exception:
+            return "err"
     return user
 
 #Подсчет очков пользователя

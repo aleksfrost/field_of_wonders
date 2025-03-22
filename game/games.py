@@ -24,10 +24,8 @@ def add_game(word: Word, user: User) -> Game:
 def get_game(word: int, user: int) -> Game:
     stmnt = f"""
             select * from games
-            where word_id = {word} and user_id = {user};
+            where word_id = {word} and user_id = {user}
+            order by game_id desc;
             """
     game = Game(*request_from_db(stmnt)[0])
     return game
-
-
-

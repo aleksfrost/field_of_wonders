@@ -1,39 +1,45 @@
 
 from database.db import request_from_db, request_into_db
+
 from words import Word
-from games import Game
 
+import typing
 
-class Round:
+if typing.TYPE_CHECKING:
+    from main_game import GameData
 
-    round_score = 0
-    is_word_guessed = False
+class gRound:
 
     def __init__(self):
-        pass
+        self.round_id: int = None
+        self.round_score: int = 0
+        self.round_prise: str = None
+        self.is_word_guessed = False
 
 def add_game_round(round_id: int, game_id: int):
     stmnt = f"""
             insert into game_rounds(game_id, round_id)
-            values({game_id}, {round_id});
+            values({game_id}, {round_id})
+            ;
             """
     request_into_db(stmnt)
 
-def add_round(round:Round, game:Game):
+def add_round(game_data: 'GameData'):
     stmnt = f"""
             insert into rounds(round_scores, is_word_guessed)
             values(
-                {round.round_score},
-                {round.is_word_guessed})
+                {game_data.ground.round_score},
+                {game_data.ground.is_word_guessed})
+            ;
             """
     request_into_db(stmnt)
     stmnt = """
             select round_id from rounds
-            order by round_id;
+            order by round_id desc
+            ;
             """
-    r_id = request_from_db(stmnt)[-1][0]
-    add_game_round(r_id, game.game_id)
-    return r_id
+    r_id = request_from_db(stmnt)[0][0]
+    add_game_round(r_id, game_data.game.game_id)
 
 #Сравниваем слова, да/нет
 def gues_the_word(word: Word, try_word: str):

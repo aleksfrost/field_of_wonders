@@ -1,7 +1,5 @@
 import random
 from database.db import request_into_db, request_from_db
-from games import Game
-import users
 
 #список подарков на барабане
 
@@ -33,15 +31,7 @@ drum.extend(scores)
 #Вращаем барабан. Если забирает приз - конец, если отказ от приза - снова крутим, если очки - угадываем
 
 def make_a_turn():
-    is_prise_taken = False
-    while not is_prise_taken:
-        drum_sector = random.choice(drum)
-        print(f"На барабане выпало: {drum_sector}")
-        if isinstance(drum_sector, int):
-            break
-        else:
-            end_play = input(f"Забираешь приз или продолжить? д/н: ")
-            if end_play == "д":
-                is_prise_taken = True
+    drum_sector = random.choice(drum)
+    print(f"На барабане выпало: {drum_sector}")
     return drum_sector
 

@@ -1,0 +1,8 @@
+0. install requirements
+1. Create a postgres DB
+2. set credentials to database/db.py CONSTs
+3. use code from tables_script.py to create tables and fill those needs to be filled
+4. run ui_main
+
+On the start table "users" is emty.
+If user is not found user will be added

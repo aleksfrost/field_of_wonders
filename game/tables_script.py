@@ -188,7 +188,7 @@ INSERT INTO categories(categorie_name)
 
 INSERT INTO prises(prise_description, discount_value, price_in_scores, categorie_id)
 	VALUES
-    ('Серзвиз какой-то матери, набор', 100, 0, 1),
+    ('Сервиз какой-то матери, набор', 100, 0, 1),
     ('Ковер-самолет, шт', 100, 0, 3),
     ('Миксер, шт', 100, 0, 3),
     ('Крем "Молодильное яблоко", туба', 100, 0, 5),

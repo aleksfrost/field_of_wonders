@@ -58,5 +58,15 @@ def add_prise(prise_description, price_in_scores, categorie, discount_value):
                 insert into categories (categorie_name)
                 values ({categorie})
                 """
-        request_into_db
+        request_into_db(stmnt)
         add_prise(prise_description, price_in_scores, categorie, discount_value)
+
+
+def get_prises_to_buy():
+        stmnt = """
+                select prise_description prises, discount_value discount, price_in_scores, c.categorie_name categorie  from prises p
+                join categories c on p.categorie_id = c.categorie_id
+                where p.to_show is true and p.price_in_scores != 0;
+                """
+        res = request_from_db(stmnt)
+        return res

@@ -29,3 +29,15 @@ def get_game(word: int, user: int) -> Game:
             """
     game = Game(*request_from_db(stmnt)[0])
     return game
+
+def get_stats():
+    stmnt = """
+            select u.user_name, sum(r.round_scores) scores, count(case when r.is_word_guessed then 1 end) wins from users u
+            join games g on u.user_id = g.user_id
+            join game_rounds gr on g.game_id = gr.game_id
+            join rounds r on r.round_id = gr.round_id
+            group by u.user_name;
+            """
+    stats = request_from_db(stmnt)
+    print(stats)
+    return stats

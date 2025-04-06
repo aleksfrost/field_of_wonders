@@ -1,6 +1,8 @@
 import string
 import sys
 from time import sleep
+from games import get_stats
+from ui_stats import StatisticsWindow
 from ui_yes_no_message import CustomDialog
 from ui_message import warning_window
 import users
@@ -192,7 +194,7 @@ class MainWindow(QMainWindow):
     def login_window(self):
         login = ui_login.LoginWindow(self.user_box)
         login.exec()
-        self.login_label.setText(f"Wellcome, {self.user_box[0].user_name}")
+        self.login_label.setText(f"Привет, {self.user_box[0].user_name}!")
         self.game_button.show()
         self.rating_button.show()
         self.bottom_label.show()
@@ -223,12 +225,9 @@ class MainWindow(QMainWindow):
             dlg = CustomDialog("Приз!", f"{self.game_data.ground.round_prise}\nЗабрать и закончить игру?")
             dlg.exec()
             if dlg.accepted == 1:
-                print("Игрок взял приз!")
-                print("КОНЕЦ ИГРЫ, хз что делать")
                 self.guess_hide()
                 self.turn_button.hide()
             else:
-                print("Игрок не взял приз и продолжил играть")
                 self.turn_button.show()
                 self.guess_hide()
                 self.make_a_turn()
@@ -281,7 +280,11 @@ class MainWindow(QMainWindow):
 
 
     def ratings_game(self):
-        ui_message.warning_window("Ratings", "Coming soon!")
+        #ui_message.warning_window("Ratings", "Coming soon!")
+        stats = get_stats()
+        rates = StatisticsWindow(stats, self.user_box[0])
+        rates.exec()
+
 
 
     def startAnimation(self):

@@ -43,7 +43,6 @@ def add_user(name: str, password: str) -> User:
             """
     request_into_db(stmnt)
     user = get_user(name, hashed_password)
-    print(f"Игрок '{user.user_name}' добавлен.")
     return user
 
 #Авторизация
@@ -66,21 +65,9 @@ def auth_user(name: str, password: str) -> User:
     res = request_from_db(stmnt)
     if res:
         user = User(*res[0])
-        print(user.__dict__)
-        print(f"Игрок '{user.user_name}' найден.")
     else:
         try:
             user = add_user(name, password)
         except Exception:
             return "err"
     return user
-
-#Подсчет очков пользователя
-def get_user_points(name):
-    pass
-
-#Подсчет статистики пользователей
-def get_users_stats():
-    pass
-
-#print(*get_users(), sep='\n')

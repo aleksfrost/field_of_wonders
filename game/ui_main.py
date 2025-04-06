@@ -181,7 +181,6 @@ class MainWindow(QMainWindow):
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
 
-        print(f"OS PATH {os.path.curdir}")
         file = open(os.path.curdir + "/game/drum.gif", "rb")
         ba = file.read()
         self.buffer = QBuffer()

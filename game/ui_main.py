@@ -1,3 +1,4 @@
+import string
 import sys
 from time import sleep
 from ui_yes_no_message import CustomDialog
@@ -45,6 +46,10 @@ class MainWindow(QMainWindow):
         #main store
         self.user_box: list[users.User] = []
         self.game_data: 'GameData' = None
+
+        cyrillic_lower_letters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+        cyrillic_letters = cyrillic_lower_letters + cyrillic_lower_letters.upper()
+        self.letters = cyrillic_letters
 
         #Lyaouts
         main_layout = QGridLayout()
@@ -176,7 +181,8 @@ class MainWindow(QMainWindow):
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
 
-        file = open(os.path.curdir + "/drum.gif", "rb")
+        print(f"OS PATH {os.path.curdir}")
+        file = open(os.path.curdir + "/game/drum.gif", "rb")
         ba = file.read()
         self.buffer = QBuffer()
         self.buffer.setData(ba)
@@ -215,7 +221,7 @@ class MainWindow(QMainWindow):
             self.drum.setText(f"{self.game_data.ground.round_score} points")
         else:
             self.drum.setText(self.game_data.ground.round_prise)
-            dlg = CustomDialog(self.game_data.ground.round_prise,  f"Забираете?\n(игра закончится)")
+            dlg = CustomDialog("Приз!", f"{self.game_data.ground.round_prise}\nЗабрать и закончить игру?")
             dlg.exec()
             if dlg.accepted == 1:
                 print("Игрок взял приз!")
@@ -233,17 +239,23 @@ class MainWindow(QMainWindow):
         self.letters_label.show()
         letter = self.gues_l_edit.text()
         if letter:
-            self.game_data.letters.add(letter.upper())
-            self.game_data = guess_a_letter(letter, self.game_data)
-            self.word.setText(self.game_data.word_to_show)
-            self.letters_label.setText(', '.join(self.game_data.letters))
-            if self.game_data.ground.is_word_guessed:
-                self.word.setText(f'Загаданное слово:{self.game_data.word.word.upper()}')
-                self.the_drum.hide()
-                self.drum.hide()
+            if len(letter) == 1:
+                if letter in self.letters:
+                    self.game_data.letters.add(letter.upper())
+                    self.game_data = guess_a_letter(letter, self.game_data)
+                    self.word.setText(self.game_data.word_to_show)
+                    self.letters_label.setText(', '.join(self.game_data.letters))
+                    if self.game_data.ground.is_word_guessed:
+                        self.word.setText(f'Загаданное слово:{self.game_data.word.word.upper()}')
+                        self.the_drum.hide()
+                        self.drum.hide()
+                    else:
+                        self.turn_button.show()
+                    self.guess_hide()
+                else:
+                    warning_window(f"Упсс!", "Для ввода доступны только\nбуквы русского алфавита")
             else:
-                self.turn_button.show()
-            self.guess_hide()
+                warning_window("Упсс!", "Введи ОДНУ букву")
         else:
             warning_window("Упсс!", "Введи букву")
 
@@ -252,15 +264,18 @@ class MainWindow(QMainWindow):
     def guess_the_word(self):
         word = self.gues_w_edit.text()
         if word:
-            self.game_data = guess_the_word(word, self.game_data)
-            if self.game_data.ground.is_word_guessed:
-                self.word.setText(f'Загаданное слово:{self.game_data.word.word.upper()}')
-                self.the_drum.hide()
-                self.drum.hide()
+            if all(map(lambda x: x in self.letters, word)):
+                self.game_data = guess_the_word(word, self.game_data)
+                if self.game_data.ground.is_word_guessed:
+                    self.word.setText(f'Загаданное слово:{self.game_data.word.word.upper()}')
+                    self.the_drum.hide()
+                    self.drum.hide()
+                else:
+                    ui_message.warning_window("Внимание", "Не верно, еще раз")
+                    self.turn_button.show()
+                self.guess_hide()
             else:
-                ui_message.warning_window("Внимание", "Не верно, еще раз")
-                self.turn_button.show()
-            self.guess_hide()
+                warning_window("Упсс!", "Все еще по-русски говорим?")
         else:
             warning_window("Упсс!", "Введи слово")
 
@@ -298,7 +313,7 @@ class MainWindow(QMainWindow):
         self.gues_w_button.hide()
 
 app = QApplication(sys.argv)
-ico = QtGui.QIcon(os.path.curdir + "/fow.ico")
+ico = QtGui.QIcon(os.path.curdir + "/game/fow.ico")
 app.setWindowIcon(ico)
 w = MainWindow()
 w.show()

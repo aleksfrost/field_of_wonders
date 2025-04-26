@@ -1,0 +1,14 @@
+{% extends "db_admin/layout.html" %}
+
+
+{% block content %}
+  <div class="features">
+    <h2>Добро пожаловать в игру, {{ player }} </h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </form>
+  </div>
+{% endblock %}
+

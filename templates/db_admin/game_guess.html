@@ -1,0 +1,15 @@
+{% extends "db_admin\game_base.html" %}
+
+{% block game_content %}
+    <form action="{% url 'game_guess' %}" method="post">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table>
+        <button type="submit" class="btn btn-primary">Угадать</button>
+        <!--Проверку нужно сделать в гуессе-->
+    </form>
+    <h2>БАРАБАН</h2>
+    <h2>На барабане выпало:</h2>
+    <h2>{{ score }} очков </h2>
+{% endblock %}

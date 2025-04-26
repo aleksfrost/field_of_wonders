@@ -1,0 +1,20 @@
+{% extends "db_admin\layout.html" %}
+
+{% block content %}
+    <div class="features">
+        {% if user %}
+            <h1>Добро пожаловать на игру поле чудес, {{ user.user_name }}!</h1>
+            <a href="{% url 'new_game' %}" class="btn btn-primary">
+                Начать новую игру
+            </a>
+        {% else %}
+            <h1>Добро пожаловать на игру поле чудес!</h1>
+            <h2>Для начала работы с приложением необходимо войти или зарегистрироваться.</h2>
+            <h2>Для регистрации Вам понадобится номер Вашей карты лояльности.</h2>
+            <a href="{% url 'login' %}" class="btn btn-primary">
+                Войти
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
+

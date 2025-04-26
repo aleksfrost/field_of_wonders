@@ -1,0 +1,17 @@
+{% extends "db_admin/layout.html" %}
+
+{% block content %}
+    <div class="features">
+        {% if prise %}
+        <h1>Поздравляем, Вы выбрали сектор приз:</h1>
+        <h1>{{ prise.prise_description }}!</h1>
+        {% elif word %}
+        <h1>Поздравляем, Вы разгадали слово:</h1>
+        <h1>{{ word }}!</h1>
+        {% endif %}
+        <h1>Игра окончена. Хотите начать новую?</h1>
+        <a href="{% url 'new_game' %}" class="btn btn-primary">
+            Начать новую игру
+        </a>
+    </div>
+{% endblock %}

@@ -11,6 +11,8 @@ class User:
         self.user_id = id
         self.user_name = name
         self.is_admin = is_admin
+        #self.scores = 0
+        #self.card_id = None
 
 
 #Список пользователей

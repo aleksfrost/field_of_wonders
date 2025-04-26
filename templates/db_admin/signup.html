@@ -1,0 +1,15 @@
+{% extends "db_admin\layout.html" %}
+
+
+{% block content %}
+  <div class="login">
+    <h2>Регистрация нового пользователя</h2>
+    <form method="post">
+      {% csrf_token %}
+      <table>
+      {{ form.as_table }}
+      </table>
+      <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </form>
+  </div>
+{% endblock %}

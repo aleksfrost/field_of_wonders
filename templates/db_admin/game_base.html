@@ -1,0 +1,16 @@
+{% extends "db_admin\layout.html" %}
+
+{% block content %}
+<div class="game">
+    <h2>Привет, {{ user.user_name }}!</h2>
+    <h2>Задание</h2>
+    <h2>{{ word.description }}</h2>
+    <h1>{{ word_to_show }}</h1>
+    {% if letters %}
+        <h2>Названные буквы</h2>
+        <h2>{{ letters }}</h2>
+    {% endif %}
+    {% block game_content %}
+    {% endblock %}
+</div>
+{% endblock %}

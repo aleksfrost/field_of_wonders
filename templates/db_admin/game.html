@@ -1,0 +1,37 @@
+{% extends "db_admin\layout.html" %}
+
+{% block content %}
+<div class="game">
+  <h2>Привет, {{ user.user_name }}!</h2>
+  <h2>Задание</h2>
+  <h2>{{ word.description }}</h2>
+  <h1>{{ word_to_show }}</h1>
+  <h2>Названные буквы</h2>
+  <h2>{{ letters }}</h2>
+  {% if score %}
+  <form action="{% url 'game' %}" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <button type="submit" class="btn btn-primary">Угадать</button>
+  </form>
+  {% endif %}
+  <h2>БАРАБАН</h2>
+  {% if score %}
+    <h2>На барабане выпало:</h2>
+    <h2>{{ score }} очков </h2>
+  {% elif prise %}
+    <h2>На барабане выпало:</h2>
+    <h2>{{ prise.prise_description }} </h2>
+    <a href="{% url 'take_prise' %}" class="btn btn-primary">
+      Взять приз
+    </a>
+  {% endif %}
+  {% if not score %}
+  <a href="{% url 'rotate' %}" class="btn btn-primary">
+    Вращать барабан
+  </a>
+  {% endif %}
+</div>
+{% endblock %}

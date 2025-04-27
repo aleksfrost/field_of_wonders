@@ -50,7 +50,6 @@ class Games(models.Model):
     def add_game(word: 'Words', user: 'Users') -> 'Games':
         new_game = Games(word=word, user=user)
         new_game.save()
-        print(f"New game created with ID = {new_game.game_id}")
         return new_game
 
     def update_game_letters(game: 'Games', letters: set):
@@ -72,9 +71,29 @@ class Games(models.Model):
             )
             result = cursor.fetchall()
         for res in result:
-            if res:
+            print(res[0])
+            if res[0]:
                 return True
         return False
+
+    def get_games_stats():
+        with connection.cursor() as cursor:
+            cursor.execute(
+                f'''
+                    select u.user_name "Игрок", sum(r.round_scores) "Очки", count(case when r.is_word_guessed then 1 end) "Победы"
+                    from users u
+                    join games g
+                    on u.user_id = g.user_id
+                    join game_rounds gr
+                    on g.game_id=gr.game_id
+                    join rounds r
+                    on gr.round_id = r.round_id
+                    group by u.user_name
+                    order by 2 desc
+                '''
+            )
+            result = cursor.fetchall()
+        return result
 
 
 class Prises(models.Model):
@@ -88,6 +107,18 @@ class Prises(models.Model):
     class Meta:
         managed = False
         db_table = 'prises'
+
+    def get_coupons():
+        with connection.cursor() as cursor:
+            cursor.execute(
+                f'''
+                    select c.categorie_name, p.prise_description, p.discount_value, p.price_in_scores from prises p
+                    join categories c on p.categorie_id = c.categorie_id
+                    where p.price_in_scores != 0;
+                '''
+            )
+            prises = cursor.fetchall()
+        return prises
 
 
 class Rounds(models.Model):
@@ -155,6 +186,40 @@ class Users(models.Model):
         user = Users(user_name=name, password=hash_pass)
         user.save()
         return user
+
+    def get_user_stat(user):
+        with connection.cursor() as cursor:
+            cursor.execute(
+                f'''
+                    select sum(p.price_in_scores) from users u
+                    join users_prises up
+                    on u.user_id = up.user_id
+                    join prises p
+                    on up.prise_id = p.prise_id
+                    where u.user_id={user.user_id}
+                    group by p.price_in_scores;
+                '''
+            )
+            spended_scores = cursor.fetchone()
+            print(spended_scores)
+            cursor.execute(
+                f'''
+                    select sum(r.round_scores)
+                    from users u
+                    join games g
+                    on u.user_id = g.user_id
+                    join game_rounds gr
+                    on g.game_id=gr.game_id
+                    join rounds r
+                    on gr.round_id = r.round_id
+                    where u.user_id = {user.user_id}
+                    group by u.user_name
+                '''
+            )
+            scores_total = cursor.fetchone()
+            print(scores_total)
+            scores_to_spend = scores_total[0] - spended_scores[0]
+        return scores_to_spend
 
 
 class Words(models.Model):

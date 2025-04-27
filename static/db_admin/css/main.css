@@ -98,3 +98,23 @@ main .asideright {
     text-align: left;
     width: 75%;
 }
+
+main .error {
+    color: #eb5959;
+}
+
+
+table .stats, thead, th, td {
+    padding:  15px;
+    border: 1px, solid #fff;
+    table-layout: fixed;
+    tab-size: 250px;
+    text-align: center;
+    color: #fff;
+}
+
+table .stats, h1, h2 {
+    padding:  15px;
+    text-align: center;
+    color: #fff;
+}

@@ -10,22 +10,22 @@ import random as rnd
 
 
 #Набор игровых данных
-class GameStats:
-    def __init__(self, user: Users):
-        self.word: Words = None
-        self.word_show = None
-        self.game: Games = Games.add_game(self.word, user)
-        self.ground: Rounds = None
-        self.letters: set = set()
-        self.status: str = None
+# class GameStats:
+#     def __init__(self, user: Users):
+#         self.word: Words = None
+#         self.word_show = None
+#         self.game: Games = Games.add_game(self.word, user)
+#         self.ground: Rounds = None
+#         self.letters: set = set()
+#         self.status: str = None
 
 
-        if self.word is None:
-            self.word = Words.get_word()
+#         if self.word is None:
+#             self.word = Words.get_word()
 
 
-        if self.word_show is None:
-            self.word_show = ''.join(['*']*len(self.word.word))
+#         if self.word_show is None:
+#             self.word_show = ''.join(['*']*len(self.word.word))
 
 
 #Проверка сесии
@@ -82,7 +82,6 @@ def login_view(request: HttpRequest):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            print(username, password)
             user = Users.get_user(username, password)
             if user is not None:
                 data = model_to_dict(user)
@@ -103,12 +102,13 @@ def new_game(request: HttpRequest):
         request.session['game_id'] = str(game.game_id)
         request.session['drum_score'] = None
         request.session['drum_prise'] = None
+        request.session['err'] = None
         return redirect("game_score")
 
 
 #Вращиениебарабана
 def rotate_drum(request: HttpRequest):
-    prises = Prises.objects.all()
+    prises = Prises.objects.filter(price_in_scores=0)
     scores = Scores.objects.all()
     drum = []
     drum.extend(scores)
@@ -126,19 +126,12 @@ def rotate_drum(request: HttpRequest):
         raise ValueError('Похоже что барабан сломался :(')  # Выпало что-то совсем не то
 
 
-# def check_guess(word, guess):
-#     count = 0
-#     for w in word.word:
-#         if guess == w:
-#             count += 1
-#     return count
-
 #Взять приз
 def take_prise(request: HttpRequest):
     prise = Prises.objects.get(prise_id=request.session.get('drum_prise'))
     user = is_authentificated(request)
-    user_prise = UsersPrises.objects.create(user.pk, prise.pk)
-    user_prise.save()
+    user_pr = UsersPrises(user_id=user.pk, prise_id=prise.pk)
+    user_pr.save()
     request.session['game_id'] = None
     return redirect('finish')
 
@@ -201,6 +194,7 @@ def game_prise_view(request: HttpRequest):
             }
     return render(request, 'db_admin/game_prise.html', context)
 
+
 def game_guess_view(request: HttpRequest):
     user = is_authentificated(request)
     if user is None:
@@ -228,6 +222,7 @@ def game_guess_view(request: HttpRequest):
             if request.method == 'POST':
                 form = GameForm(request.POST)
                 if form.is_valid():
+                    request.session['err'] = None
                     word = form.cleaned_data['word'].upper()
                     if len(word) == 1:
                         letters.add(word)
@@ -252,6 +247,7 @@ def game_guess_view(request: HttpRequest):
                 else:
                     form = GameForm()
                     context['form'] = form
+                    context['err'] = '*Только буквы кириллицы'
                     return render(request, 'db_admin/game_guess.html', context)
                 request.session['drum_score'] = None
                 return redirect('game_score')
@@ -279,12 +275,29 @@ def rules_view(request):
     return render(request, 'db_admin/rules.html')
 
 
-def statistics_view(requset):
-    pass
+def statistics_view(request: HttpRequest):
+    user = is_authentificated(request)
+    if user is None:
+        pass
+    stats = Games.get_games_stats()
+    print(stats)
+    context = {'stats': stats}
+    return render(request, 'db_admin/statistics.html', context)
 
 
-def exchange_view(request):
-    pass
+
+def exchange_view(request: HttpRequest):
+    user = is_authentificated(request)
+    if user is None:
+        return redirect(request, 'statistics')
+    scores_to_spend = Users.get_user_stat(user)
+    prises = Prises.get_coupons()
+    context = {
+        'scores': scores_to_spend,
+        'prises': prises,
+        'user': user.user_name,
+    }
+    return render(request, 'db_admin/exchange.html', context)
 
 
 def logout_view(request: HttpRequest):

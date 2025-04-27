@@ -7,9 +7,14 @@
         {{ form.as_table }}
         </table>
         <button type="submit" class="btn btn-primary">Угадать</button>
-        <!--Проверку нужно сделать в гуессе-->
     </form>
+    {% if err %}
+    <div class="error">
+        <h4>{{ err }}</h4>
+    </div>
+    {%  endif %}
+    <br>
     <h2>БАРАБАН</h2>
-    <h2>На барабане выпало:</h2>
-    <h2>{{ score }} очков </h2>
+    <h4>На барабане выпало:</h4>
+    <h4>{{ score }} очков </h4>
 {% endblock %}

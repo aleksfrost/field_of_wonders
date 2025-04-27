@@ -1,0 +1,24 @@
+{% extends "db_admin/layout.html" %}
+
+{% block content %}
+    <h1 class="stats">Статистика</h>
+    <table class="stats">
+        <thead>
+            <tr>
+                <th>Игрок</th>
+                <!--Настроить переходы ASC / DESC-->
+                <th><a href="">Очки</a></th>
+                <th><a href="">Победы</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for st in stats %}
+                <tr>
+                    {% for cell in st %}
+                        <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

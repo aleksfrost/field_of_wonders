@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from db_admin.models import Users
 from django import forms
 from django.core.validators import RegexValidator
+from django.core.exceptions  import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 #class SignUpForm(UserCreationForm):
 class SignUpForm(forms.Form):
@@ -27,24 +29,27 @@ class LoginForm(forms.Form):
 
 
 class GameForm(forms.Form):
-    # ru_validator = RegexValidator(
-    #     regex=r'^[а-яА-Я]',
-    #     message='Только буквы русского языка',
-    #     code='invalid_ru_ru_input',
-    # )
+    ru_validator = RegexValidator(
+        regex=r'^[а-яА-Я]*$',
+        message='Только буквы русского языка',
+        code='invalid_ru_input',
+    )
 
     def ru_ru_validator(word):
+        print('are we here')
         regex = r'[а-яА-ЯЁё]'
         res = all(map(lambda x: re.findall(regex, x), word))
+        print(f'res = {res}')
         if res:
             return word
         else:
-            raise forms.ValidationError('Только буквы кириллицы, пробел и дефис')
+            print('Error? Error!')
+            raise ValidationError('Только буквы кириллицы, пробел и дефис')
 
     word = forms.CharField(
+        validators=[ru_ru_validator],
         min_length=1,
         required=True,
-        validators=[ru_ru_validator,],
         label="Введи букву или слово",
         )
 

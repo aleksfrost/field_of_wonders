@@ -3,12 +3,15 @@
 {% block content %}
 <div class="game">
     <h2>Привет, {{ user.user_name }}!</h2>
-    <h2>Задание</h2>
+    <br>
+    <h2>Задание:</h2>
     <h2>{{ word.description }}</h2>
     <h1>{{ word_to_show }}</h1>
+    <h2>Названные буквы</h2>
     {% if letters %}
-        <h2>Названные буквы</h2>
         <h2>{{ letters }}</h2>
+    {% else %}
+        <br>
     {% endif %}
     {% block game_content %}
     {% endblock %}

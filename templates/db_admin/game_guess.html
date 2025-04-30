@@ -3,9 +3,12 @@
 {% block game_content %}
     <form action="{% url 'game_guess' %}" method="post">
         {% csrf_token %}
-        <table>
         {{ form.as_table }}
-        </table>
+        <!--
+        <span class="input-group-text">@ник в Телеграме</span>
+        {{ form.word }}
+        </div>
+        -->
         <button type="submit" class="btn btn-primary">Угадать</button>
     </form>
     {% if err %}
@@ -15,6 +18,5 @@
     {%  endif %}
     <br>
     <h2>БАРАБАН</h2>
-    <h4>На барабане выпало:</h4>
-    <h4>{{ score }} очков </h4>
+    <h4>На барабане выпало: {{ score }} очков </h4>
 {% endblock %}

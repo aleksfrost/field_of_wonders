@@ -7,6 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 import hashlib
 from django.db import connection, models
+from django.db.models import Count, Sum
 import random as rnd
 from django.contrib.auth.models import AbstractUser
 from django.http import HttpResponse
@@ -109,16 +110,28 @@ class Prises(models.Model):
         db_table = 'prises'
 
     def get_coupons():
+        prises = Prises.objects.exclude(price_in_scores=0).select_related('categorie').annotate(Count('categorie_id'))
+        return prises
+
+    def get_my_coupons(user):
+        #prises = UsersPrises.objects.filter(user_id=user.pk).select_related('prise')
         with connection.cursor() as cursor:
             cursor.execute(
                 f'''
-                    select c.categorie_name, p.prise_description, p.discount_value, p.price_in_scores from prises p
-                    join categories c on p.categorie_id = c.categorie_id
-                    where p.price_in_scores != 0;
+                    select c.categorie_name, p.prise_description, p.discount_value
+                    from users_prises up
+                    join users u
+                    on up.user_id = u.user_id
+                    join prises p
+                    on up.prise_id=p.prise_id
+                    join categories c
+                    on p.categorie_id = c.categorie_id
+                    where u.user_id = {user.user_id}
                 '''
             )
-            prises = cursor.fetchall()
-        return prises
+            result = cursor.fetchall()
+        return result
+        #return prises
 
 
 class Rounds(models.Model):
@@ -165,6 +178,7 @@ class Users(models.Model):
         except Users.DoesNotExist:
             return None
 
+
     def get_user(name, password):
         hash_pass = hashlib.sha256(password.encode()).hexdigest()
         try:
@@ -197,11 +211,13 @@ class Users(models.Model):
                     join prises p
                     on up.prise_id = p.prise_id
                     where u.user_id={user.user_id}
-                    group by p.price_in_scores;
+                    group by u.user_id;
                 '''
             )
-            spended_scores = cursor.fetchone()
-            print(spended_scores)
+            spent_scores = cursor.fetchone()
+            print(spent_scores)
+            if spent_scores is None:
+                spent_scores = [0]
             cursor.execute(
                 f'''
                     select sum(r.round_scores)
@@ -213,12 +229,15 @@ class Users(models.Model):
                     join rounds r
                     on gr.round_id = r.round_id
                     where u.user_id = {user.user_id}
-                    group by u.user_name
+                    group by u.user_name;
                 '''
             )
             scores_total = cursor.fetchone()
             print(scores_total)
-            scores_to_spend = scores_total[0] - spended_scores[0]
+            if scores_total is None:
+                scores_total = [0]
+            scores_to_spend = scores_total[0] - spent_scores[0]
+            print(scores_to_spend)
         return scores_to_spend
 
 
@@ -294,3 +313,4 @@ class Cards(models.Model):
                 raise ValueError(f"Карта {card_no} уже зарегистрирована")
         else:
             raise ValueError("Карты с таким номером не существует.")
+

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="data:," />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'db_admin/css/main.css' %}">
     <script src="https://kit.fontawesome.com/556483727a.js" crossorigin="anonymous"></script>
@@ -19,13 +20,19 @@
         <h3>Навигация</h3>
         <ul>
             <a href="{% url 'home' %}"><li><i class="fa-solid fa-house"></i> Главная</li></a>
-            <a href="{% url 'registration' %}"><li><i class="fa-solid fa-circle-user"></i> Регистрация</li></a>
-            <a href="{% url 'login' %}"><li><i class="fa-solid fa-circle-user"></i> Вход</li></a>
-            <a href="{% url 'game_score' %}"><li><i class="fa-solid fa-gamepad"></i> Игра</li></a>
+            {% if user is None %}
+                <a href="{% url 'registration' %}"><li><i class="fa-solid fa-circle-user"></i> Регистрация</li></a>
+                <a href="{% url 'login' %}"><li><i class="fa-solid fa-circle-user"></i> Вход</li></a>
+            {% endif %}
+            {% if user is not None %}
+                <a href="{% url 'game_score' %}"><li><i class="fa-solid fa-gamepad"></i> Игра</li></a>
+                <a href="{% url 'statistics' %}"><li><i class="fa-solid fa-chart-simple"></i> Статистика</li></a>
+                <a href="{% url 'exchange' %}"><li><i class="fa-solid fa-rotate"></i> Обменник</li></a>
+                <a href="{% url 'coupons' %}"><li><i class="fa-solid fa-cart-plus"></i> Мои купоны</li></a>
+                <a href="{% url 'cart:view_cart' %}"><li><i class="fa-solid fa-cart-shopping"></i> Корзина</li></a>
+                <a href="{% url 'logout' %}"><li><i class="fa-solid fa-right-from-bracket"></i> Выход</li></a>
+            {% endif %}
             <a href="{% url 'rules' %}"><li><i class="fa-solid fa-circle-exclamation"></i> Правила</li></a>
-            <a href="{% url 'statistics' %}"><li><i class="fa-solid fa-chart-simple"></i> Статистика</li></a>
-            <a href="{% url 'exchange' %}"><li><i class="fa-solid fa-cart-shopping"></i> Обменник</li></a>
-            <a href="{% url 'logout' %}"><li><i class="fa-solid fa-right-from-bracket"></i> Выход</li></a>
 
         </ul>
     </aside>

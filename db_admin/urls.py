@@ -16,4 +16,5 @@ urlpatterns = [
     path("take_prise", views.take_prise, name="take_prise"),
     path("finish", views.finish_view, name="finish"),
     path("logout", views.logout_view, name="logout"),
+    path("coupons", views.coupons_view, name="coupons"),
 ]

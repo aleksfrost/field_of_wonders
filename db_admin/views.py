@@ -52,9 +52,7 @@ def home_view(request: HttpRequest):
 
 #Регистрация пользователя и карты
 def signup_view(request: HttpRequest):
-    print("Are we here still?")
     if request.method == 'POST':
-        print("Are we here?")
         form = SignUpForm(request.POST)
         if form.is_valid():
             card_no = form.cleaned_data.get("card_no")
@@ -72,7 +70,7 @@ def signup_view(request: HttpRequest):
             return redirect('home')     # Перенаправляем на главную страницу
     else:
         form = SignUpForm()
-    return render(request, 'db_admin/signup.html', {'form': form})
+    return render(request, 'db_admin/signup.html', {'form': form, 'user': None})
 
 
 #Логин
@@ -87,7 +85,7 @@ def login_view(request: HttpRequest):
                 data = model_to_dict(user)
                 request.session['user'] =  data   # Выполняем вход
                 return redirect('home')  # Перенаправляем на главную страницу
-    return render(request, 'db_admin/login.html', {'form': form})
+    return render(request, 'db_admin/login.html', {'form': form, 'user': None})
 
 
 
@@ -266,13 +264,17 @@ def finish_view(request: HttpRequest):
     word = request.session.get('clear_word')
     context = {
         'prise': prise,
-        'word': word
+        'word': word,
     }
     return render(request, 'db_admin/finish.html', context)
 
 
 def rules_view(request):
-    return render(request, 'db_admin/rules.html')
+    user = is_authentificated(request)
+    context = {
+        'user': user
+    }
+    return render(request, 'db_admin/rules.html', context)
 
 
 def statistics_view(request: HttpRequest):
@@ -300,6 +302,21 @@ def exchange_view(request: HttpRequest):
     return render(request, 'db_admin/exchange.html', context)
 
 
+def coupons_view(request: HttpRequest):
+    user = is_authentificated(request)
+    if user is None:
+        return redirect(request, 'statistics')
+    prises = Prises.get_my_coupons(user)
+    prises_to_show = prises.sort(key=lambda x: x[0])
+    scores_to_spend = Users.get_user_stat(user)
+    context = {
+        'scores': scores_to_spend,
+        'prises': prises,
+        'user': user.user_name,
+    }
+    return render(request, 'db_admin/my_coupons.html', context)
+
 def logout_view(request: HttpRequest):
     request.session.clear()
+    request.session['user'] = None
     return redirect('home')

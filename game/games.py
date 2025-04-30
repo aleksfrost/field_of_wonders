@@ -5,10 +5,11 @@ from words import Word
 
 class Game:
 
-    def __init__(self, id: int = None,  word_id: int = None, user_id: int = None):
+    def __init__(self, id: int = None,  word_id: int = None, user_id: int = None, letters: str = None):
         self.game_id = id
         self.word_id = word_id
         self.user_id = user_id
+        self.letters = letters
 
 
 def add_game(word: Word, user: User) -> Game:

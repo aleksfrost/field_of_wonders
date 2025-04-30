@@ -1,8 +1,7 @@
 {% extends "db_admin\game_base.html" %}
 
 {% block game_content %}
-    <h2>На барабане выпало:</h2>
-    <h2>{{ prise.prise_description }} </h2>
+    <h2>На барабане выпало: {{ prise.prise_description }}</h2>
     <a href="{% url 'take_prise' %}" class="btn btn-primary">
     Взять приз
     </a>

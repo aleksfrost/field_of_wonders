@@ -7,7 +7,7 @@ aside {
     background: #181818;
     width: 20%;
     padding: 2.5%;
-    height: 100vh;
+    height: 200vh;
     color: #fff;
     border-right: 5px solid #4d4d4d;
 }
@@ -81,6 +81,7 @@ main .game {
 
 
 main .asideright {
+    display: flex;
     float: right;
     background: #181818;
     width: 20%;
@@ -113,8 +114,37 @@ table .stats, thead, th, td {
     color: #fff;
 }
 
-table .stats, h1, h2 {
-    padding:  15px;
+table .stats, h1, h2, p {
+    padding:  5px;
     text-align: center;
     color: #fff;
+}
+
+
+.prises-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next row if necessary */
+    justify-content: space-between; /* Space items evenly along the main axis */
+    list-style: none; /* Remove list styles */
+    padding: 0;
+}
+
+.prises-item {
+    flex: 1; /* Grow to fill available space evenly */
+    max-width: 30%; /* Limit item width to avoid overcrowding */
+    margin: 10px; /* Add spacing between items */
+    border: 1px solid #ccc; /* Add a border for visual separation */
+    padding: 10px;
+    text-align: center;
+}
+
+/* Style the "Buy Now" button */
+.buy-now-button {
+    display: block;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
 }

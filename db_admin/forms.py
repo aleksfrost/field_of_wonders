@@ -1,12 +1,10 @@
 import re
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from db_admin.models import Users
 from django import forms
 from django.core.validators import RegexValidator
 from django.core.exceptions  import ValidationError
-from django.utils.translation import gettext_lazy as _
 
-#class SignUpForm(UserCreationForm):
+
 class SignUpForm(forms.Form):
     card_no = forms.IntegerField(max_value=1000000, min_value=100001, label="Номер карты", help_text="Карта лояльности")
     user_name = forms.CharField(max_length=254, min_length=3, label="Имя пользователя")
@@ -29,11 +27,6 @@ class LoginForm(forms.Form):
 
 
 class GameForm(forms.Form):
-    ru_validator = RegexValidator(
-        regex=r'^[а-яА-Я]*$',
-        message='Только буквы русского языка',
-        code='invalid_ru_input',
-    )
 
     def ru_ru_validator(word):
         print('are we here')

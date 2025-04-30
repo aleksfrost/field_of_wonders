@@ -7,24 +7,18 @@
     <h2>Игрок: {{ user }}</h2>
     <h2>Доступные очки: {{ scores }}</h2>
     </div>
-    <table class="stats">
-        <thead>
-            <tr>
-                <th>Категория</th>
-                <th>Описание купона</th>
-                <!--Настроить переходы ASC / DESC-->
-                <th><a href="">Размер скидки</a></th>
-                <th><a href="">Стоимость купона</a></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for st in prises %}
-                <tr>
-                    {% for cell in st %}
-                        <td>{{ cell }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+    <ul class="prises-list">
+        {% for prise in prises %}
+            <li class="prises-item">
+                <img src="static/db_admin/img/{{ prise.categorie.categorie_id }}.jpg" alt="{{ prise.categorie.categorie_name }}">
+                <h2>{{prise.categorie.categorie_name}}</h2>
+                <p>{{prise.prise_description}}</p>
+                <p>Размер скидки {{prise.discount_value}}</p>
+                <p>Стоимость в баллах {{prise.price_in_scores}}</p>
+                <a href="#" class="buy-now-button">Buy Now</a><br>
+                <a class="buy-now-button" href="{% url 'cart:add_to_cart' prise.prise_id %}">Add to Cart</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

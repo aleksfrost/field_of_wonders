@@ -1,5 +1,5 @@
 from django.urls import path
-from db_admin import views
+from gameplay import views
 
 urlpatterns = [
     path("", views.home_view, name="home"),

@@ -1,15 +1,14 @@
-{% extends "db_admin\layout.html" %}
+{% extends "gameplay/layout.html" %}
 
 
 {% block content %}
-  <div class="login">
-    <h2>Регистрация нового пользователя</h2>
+  <div class="features">
+    <h2>Добро пожаловать в игру, {{ player }} </h2>
     <form method="post">
       {% csrf_token %}
-      <table>
-      {{ form.as_table }}
-      </table>
+      {{ form.as_p }}
       <button type="submit" class="btn btn-primary">Подтвердить</button>
     </form>
   </div>
 {% endblock %}
+

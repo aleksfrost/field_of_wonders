@@ -1,6 +1,6 @@
 from django.db import models
 
-from db_admin.models import Prises, Users
+from gameplay.models import Prises, Users
 
 # Create your models here.
 class CartItem(models.Model):

@@ -1,4 +1,4 @@
-{% extends "db_admin/layout.html" %}
+{% extends "gameplay/layout.html" %}
 
 {% block content %}
     <div class="stats">
@@ -11,7 +11,7 @@
     <ul class="prises-list">
         {% for prise in prises %}
             <li class="prises-item">
-                <img src="static/db_admin/img/{{ prise.categorie.categorie_id }}.jpg" alt="{{ prise.categorie.categorie_name }}">
+                <img src="static/gameplay/img/{{ prise.categorie.categorie_id }}.jpg" alt="{{ prise.categorie.categorie_name }}">
                 <h2>{{prise.categorie.categorie_name}}</h2>
                 <p>{{prise.prise_description}}</p>
                 <p>Размер скидки {{prise.discount_value}}</p>

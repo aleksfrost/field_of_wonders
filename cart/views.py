@@ -3,7 +3,7 @@ from django.http import HttpRequest
 # Create your views here.
 from django.shortcuts import render, redirect
 from .models import CartItem
-from db_admin.models import Prises, Users, UsersPrises
+from gameplay.models import Prises, Users, UsersPrises
 
 
 def is_authentificated(request:HttpRequest):

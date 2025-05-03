@@ -1,0 +1,28 @@
+{% extends 'db_admin/admin_layout.html' %}
+
+
+{% block content %}
+
+{% if object %}
+    <h1>Изменить пользователя</h1>
+{% else %}
+    <h1>Добавить пользователя</h1><br><br>
+
+    <h2>Случай исключительный! </h2><br>
+    <h2>Предварительно пароль нужно зашифровать</h2>
+    <h2>пароль для БД = hashlib.sha256(password.encode()).hexdigest()</h2>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <ul class="prises-list">
+        <li class="prises-item">
+            <p>пользователь: {{ login }}</p>
+            {{ form.as_p }}
+            <input class="submit-button" type="submit" value="Подтвердить"/>
+        </li>
+    </ul>
+</form>
+
+
+{% endblock %}

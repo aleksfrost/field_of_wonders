@@ -16,12 +16,15 @@ from django.http import HttpResponse
 
 class Categories(models.Model):
     categorie_id = models.AutoField(primary_key=True)
-    categorie_name = models.CharField(blank=False, null=False)
+    categorie_name = models.CharField(blank=False, null=False, verbose_name='Категория')
 
     class Meta:
         managed = False
         db_table = 'categories'
+        ordering = ['categorie_id']
 
+    def __str__(self):
+        return f"{self.categorie_name}"
 
 class GameRounds(models.Model):
     gr_id = models.AutoField(primary_key=True)
@@ -99,22 +102,22 @@ class Games(models.Model):
 
 class Prises(models.Model):
     prise_id = models.AutoField(primary_key=True)
-    prise_description = models.CharField(blank=False, null=False)
-    discount_value = models.IntegerField(blank=False, null=False)
-    price_in_scores = models.IntegerField(blank=False, null=False)
-    categorie = models.ForeignKey(Categories, models.DO_NOTHING, blank=False, null=False)
-    to_show = models.BooleanField(blank=True, null=False)
+    prise_description = models.CharField(blank=False, null=False, verbose_name='Описание')
+    discount_value = models.IntegerField(blank=False, null=False, verbose_name='Скидка, %')
+    price_in_scores = models.IntegerField(blank=False, null=False, verbose_name='Стоимость, очки')
+    categorie = models.ForeignKey(Categories, models.DO_NOTHING, blank=False, null=False, verbose_name='Категория')
+    to_show = models.BooleanField(blank=True, null=False, verbose_name='Видимость')
 
     class Meta:
         managed = False
         db_table = 'prises'
+        ordering = ['categorie_id', 'prise_description']
 
     def get_coupons():
         prises = Prises.objects.exclude(price_in_scores=0).select_related('categorie').annotate(Count('categorie_id'))
         return prises
 
     def get_my_coupons(user):
-        #prises = UsersPrises.objects.filter(user_id=user.pk).select_related('prise')
         with connection.cursor() as cursor:
             cursor.execute(
                 f'''
@@ -131,8 +134,6 @@ class Prises(models.Model):
             )
             result = cursor.fetchall()
         return result
-        #return prises
-
 
 class Rounds(models.Model):
     round_id = models.AutoField(primary_key=True)
@@ -157,6 +158,7 @@ class Scores(models.Model):
     class Meta:
         managed = False
         db_table = 'scores'
+        ordering = ['score']
 
 
 class Users(models.Model):
@@ -245,13 +247,14 @@ class Words(models.Model):
     word_id = models.AutoField(primary_key=True)
     word = models.CharField(unique=True)
     description = models.CharField()
-    difficulty = models.IntegerField()
+    difficulty = models.IntegerField(default=100)
 
     letters = models
 
     class Meta:
         managed = False
         db_table = 'words'
+        ordering = ['word']
 
     def get_word():
         words = Words.objects.all()

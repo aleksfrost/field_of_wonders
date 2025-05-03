@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gameplay.urls')),
     path('', include('cart.urls')),
+    path('', include('db_admin.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

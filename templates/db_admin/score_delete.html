@@ -1,0 +1,18 @@
+{% extends 'db_admin/admin_layout.html' %}
+
+
+{% block content %}
+
+<h1>Удалить очки</h1>
+    <form method="post">
+        {% csrf_token %}
+        <ul class="prises-list">
+            <li class="prises-item">
+                <p>Вы уверены что хотите удалить позицию?</p>
+                <input class="submit-button" type="submit" value="Подтвердить"/>
+            </li>
+        </ul>
+
+    </form>
+
+{% endblock %}

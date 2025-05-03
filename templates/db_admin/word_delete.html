@@ -1,0 +1,15 @@
+{% extends 'db_admin/admin_layout.html' %}
+
+
+{% block content %}
+
+<h1>Изменить/добавить слово</h1>
+
+<formmethod="post">
+    {% csrf_token %}
+    {{% form.as_p %}}
+    <inputtype="submit"value="Submit"/>
+</form>
+
+
+{% endblock %}

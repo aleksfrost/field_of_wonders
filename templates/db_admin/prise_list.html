@@ -1,0 +1,27 @@
+{% extends 'db_admin/admin_layout.html' %}
+
+
+{% block content %}
+
+<h1>Призы/купоны</h1>
+<h2>Для призов скидка 100% стоимость 0</h2>
+<h2>Для купонов скидка != 100% стоимость > 0</h2>
+
+<ul class="prises-list">
+	{% for obj in object_list %}
+    <li class="prises-item">
+        <p>{{ obj.prise_description }}</p>
+        <p>Скидка: {{ obj.discount_value }}</p>
+        <p>Стоимость: {{ obj.price_in_scores }}</p>
+        <p>Категория: {{ obj.categorie_id }}</p>
+        <p>Видимость: {{ obj.to_show }}</p>
+        <p><a class="buy-now-button" href="{% url 'db_admin:prise_update' obj.prise_id %}">Изменить</a></p>
+    </li>
+	{% endfor %}
+    <li class="prises-item">
+    <a href="{% url 'db_admin:prise_create' %}">Добавить приз</a>
+    </li>
+</ul>
+
+
+{% endblock %}

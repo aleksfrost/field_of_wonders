@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gameplay',
     'cart',
+    'db_admin',
 ]
 
 MIDDLEWARE = [

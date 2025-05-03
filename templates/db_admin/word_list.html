@@ -1,0 +1,25 @@
+{% extends 'db_admin/admin_layout.html' %}
+
+
+{% block content %}
+
+<h1>Слова</h1>
+
+<ul class="prises-list">
+	{% for word in object_list %}
+    <li class="prises-item">
+        <p>{{ word.word }}</p>
+        <p>{{ word.description }}</p>
+        <p>Сложность: {{ word.difficulty }}</p>
+
+        <p><a class="buy-now-button" href="{% url 'db_admin:word_update' word.word_id %}">Изменить</a></p>
+
+    </li>
+	{% endfor %}
+    <li class="prises-item">
+    <a href="{% url 'db_admin:word_create' %}">Добавить слово</a>
+    </li>
+</ul>
+
+
+{% endblock %}

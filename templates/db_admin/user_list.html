@@ -1,0 +1,23 @@
+{% extends 'db_admin/admin_layout.html' %}
+
+
+{% block content %}
+
+<h1>Пользователи</h1>
+
+<ul class="prises-list">
+	{% for obj in object_list %}
+    <li class="prises-item">
+        <p>ID: {{ obj.user_id }}</p>
+        <p>Логин: {{ obj.user_name }}</p>
+        <p>Права админа: {{ obj.is_admin }}</p>
+        <p><a class="buy-now-button" href="{% url 'db_admin:user_update' obj.user_id %}">Изменить</a></p>
+    </li>
+	{% endfor %}
+    <li class="prises-item">
+    <a href="{% url 'db_admin:user_create' %}">Добавить пользователя</a>
+    </li>
+</ul>
+
+
+{% endblock %}

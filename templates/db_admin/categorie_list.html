@@ -1,0 +1,22 @@
+{% extends 'db_admin/admin_layout.html' %}
+
+
+{% block content %}
+
+<h1>Категории</h1>
+
+<ul class="prises-list">
+	{% for obj in object_list %}
+    <li class="prises-item">
+        <p>ID категории: {{ obj.categorie_id }}</p>
+        <p>{{ obj.categorie_name }}</p>
+        <p><a class="buy-now-button" href="{% url 'db_admin:categorie_update' obj.categorie_id %}">Изменить</a></p>
+    </li>
+	{% endfor %}
+    <li class="prises-item">
+    <a href="{% url 'db_admin:categorie_create' %}">Добавить категорию</a>
+    </li>
+</ul>
+
+
+{% endblock %}

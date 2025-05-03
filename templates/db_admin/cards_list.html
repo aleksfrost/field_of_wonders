@@ -1,0 +1,18 @@
+{% extends 'db_admin/admin_layout.html' %}
+
+
+{% block content %}
+
+<h1>Очки</h1>
+
+<ul class="prises-list">
+	{% for obj in object_list %}
+    <li class="prises-item">
+        <p>№ карты: {{ obj.card_id }}</p>
+        <p>Пользователь: {{ obj.user_id }}</p>
+    </li>
+    {% endfor %}
+
+</ul>
+
+{% endblock %}

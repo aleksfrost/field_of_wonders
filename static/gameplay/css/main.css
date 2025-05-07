@@ -158,3 +158,8 @@ table .stats, h1, h2, p {
     padding: 5px 10px;
     border-radius: 5px;
 }
+
+.prises_img {
+    width: 180px;
+    height: 180px;
+}

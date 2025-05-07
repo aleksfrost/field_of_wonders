@@ -2,7 +2,7 @@
 #Имя : очки, [список выбранных скидок]
 
 import hashlib
-from database.db import request_into_db, request_from_db
+from game.database.db import request_into_db, request_from_db
 
 
 class User:

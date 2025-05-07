@@ -1,7 +1,7 @@
 
 import random
 import string
-from database.db import request_into_db, request_from_db
+from game.database.db import request_into_db, request_from_db
 
 
 class Word:

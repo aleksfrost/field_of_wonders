@@ -3,7 +3,7 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 import hashlib
 from django.db import connection, models
@@ -19,7 +19,7 @@ class Categories(models.Model):
     categorie_name = models.CharField(blank=False, null=False, verbose_name='Категория')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'categories'
         ordering = ['categorie_id']
 
@@ -28,12 +28,12 @@ class Categories(models.Model):
 
 class GameRounds(models.Model):
     gr_id = models.AutoField(primary_key=True)
-    game = models.ForeignKey('Games', models.DO_NOTHING, blank=True, null=True)
-    round = models.ForeignKey('Rounds', models.DO_NOTHING, blank=True, null=True)
+    game = models.ForeignKey('Games', on_delete=models.CASCADE, blank=True, null=False)
+    round = models.ForeignKey('Rounds', on_delete=models.CASCADE, blank=True, null=False)
 
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'game_rounds'
 
     def add_game_round(game: 'Games', round: 'Rounds'):
@@ -44,11 +44,11 @@ class GameRounds(models.Model):
 class Games(models.Model):
     game_id = models.AutoField(primary_key=True)
     letters = models.CharField(max_length=33)
-    word = models.ForeignKey('Words', models.DO_NOTHING, blank=False, null=False)
-    user = models.ForeignKey('Users', models.DO_NOTHING, blank=False, null=False)
+    word = models.ForeignKey('Words', on_delete=models.CASCADE, blank=False, null=False)
+    user = models.ForeignKey('Users', on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'games'
 
     def add_game(word: 'Words', user: 'Users') -> 'Games':
@@ -105,11 +105,11 @@ class Prises(models.Model):
     prise_description = models.CharField(blank=False, null=False, verbose_name='Описание')
     discount_value = models.IntegerField(blank=False, null=False, verbose_name='Скидка, %')
     price_in_scores = models.IntegerField(blank=False, null=False, verbose_name='Стоимость, очки')
-    categorie = models.ForeignKey(Categories, models.DO_NOTHING, blank=False, null=False, verbose_name='Категория')
+    categorie = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=False, null=False, verbose_name='Категория')
     to_show = models.BooleanField(blank=True, null=False, verbose_name='Видимость')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'prises'
         ordering = ['categorie_id', 'prise_description']
 
@@ -141,7 +141,7 @@ class Rounds(models.Model):
     is_word_guessed = models.BooleanField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'rounds'
 
 
@@ -156,7 +156,7 @@ class Scores(models.Model):
     score = models.IntegerField()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'scores'
         ordering = ['score']
 
@@ -169,7 +169,7 @@ class Users(models.Model):
     scores = models.BigIntegerField(default=0)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'users'
 
 
@@ -252,7 +252,7 @@ class Words(models.Model):
     letters = models
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'words'
         ordering = ['word']
 
@@ -282,12 +282,12 @@ class Words(models.Model):
 
 class UsersPrises(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(Users, models.DO_NOTHING)
-    prise = models.ForeignKey(Prises, models.DO_NOTHING)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    prise = models.ForeignKey(Prises, on_delete=models.CASCADE)
 
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'users_prises'
 
 
@@ -296,7 +296,7 @@ class Cards(models.Model):
     user_id = models.BigIntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'cards'
 
     def get_card(card_no):

@@ -1,6 +1,6 @@
-from game.database.db import request_into_db, request_from_db
-from game.users import User
-from game.words import Word
+from database.db import request_into_db, request_from_db
+from users import User
+from words import Word
 
 
 class Game:

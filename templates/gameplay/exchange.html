@@ -11,14 +11,18 @@
     <ul class="prises-list">
         {% for prise in prises %}
             <li class="prises-item">
-                <img class="prises_img" src="static/gameplay/img/{{ prise.categorie.categorie_id }}.jpg" alt="{{ prise.categorie.categorie_name }}">
+                {% if prise.categorie.categorie_img %}
+                    <img class="prises_img" src="{{ prise.categorie.categorie_img.url }}">
+                {% endif %}
                 <h2>{{prise.categorie.categorie_name}}</h2>
                 <p>{{prise.prise_description}}</p>
-                <p>Размер скидки {{prise.discount_value}}</p>
-                <p>Стоимость в баллах {{prise.price_in_scores}}</p>
-                <a href="#" class="buy-now-button">Buy Now</a><br>
-                <a class="buy-now-button" href="{% url 'cart:add_to_cart' prise.prise_id %}">Add to Cart</a>
+                <p>Размер скидки: {{prise.discount_value}}</p>
+                <p>Стоимость в баллах: {{prise.price_in_scores}}</p>
+                <a href="#" class="buy-now-button">Приобрести</a><br>
+                <a class="buy-now-button" href="{% url 'cart:add_to_cart' prise.prise_id %}">Добавить в корзину</a>
             </li>
         {% endfor %}
+
+        <a class="buy-now-button" href="{% url 'cart:view_cart' %}">Перейти в корзину</a>
     </ul>
 {% endblock %}

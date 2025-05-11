@@ -17,6 +17,7 @@ from django.http import HttpResponse
 class Categories(models.Model):
     categorie_id = models.AutoField(primary_key=True)
     categorie_name = models.CharField(blank=False, null=False, verbose_name='Категория')
+    categorie_img = models.FileField(upload_to="images/", null=True, blank=True)
 
     class Meta:
         managed = True
@@ -28,8 +29,8 @@ class Categories(models.Model):
 
 class GameRounds(models.Model):
     gr_id = models.AutoField(primary_key=True)
-    game = models.ForeignKey('Games', on_delete=models.CASCADE, blank=True, null=False)
-    round = models.ForeignKey('Rounds', on_delete=models.CASCADE, blank=True, null=False)
+    game = models.ForeignKey('Games', on_delete=models.CASCADE, blank=False, null=False)
+    round = models.ForeignKey('Rounds', on_delete=models.CASCADE, blank=False, null=False)
 
 
     class Meta:
@@ -106,7 +107,7 @@ class Prises(models.Model):
     discount_value = models.IntegerField(blank=False, null=False, verbose_name='Скидка, %')
     price_in_scores = models.IntegerField(blank=False, null=False, verbose_name='Стоимость, очки')
     categorie = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=False, null=False, verbose_name='Категория')
-    to_show = models.BooleanField(blank=True, null=False, verbose_name='Видимость')
+    to_show = models.BooleanField(blank=False, default=True, null=False, verbose_name='Видимость')
 
     class Meta:
         managed = True
@@ -248,8 +249,6 @@ class Words(models.Model):
     word = models.CharField(unique=True)
     description = models.CharField()
     difficulty = models.IntegerField(default=100)
-
-    letters = models
 
     class Meta:
         managed = True

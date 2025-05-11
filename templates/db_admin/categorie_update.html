@@ -9,7 +9,7 @@
     <h1>Добавить категорию</h1>
 {% endif %}
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <ul class="prises-list">
         <li class="prises-item">

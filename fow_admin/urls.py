@@ -25,4 +25,4 @@ urlpatterns = [
     path('', include('gameplay.urls')),
     path('', include('cart.urls')),
     path('', include('db_admin.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

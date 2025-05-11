@@ -60,11 +60,15 @@
 
     </div>
 
-    <p>Итого: {{ total_price }}</p>
+    <p>К оплате: {{ total_price }}</p>
+    <p>Доступно: {{ scores }}</p>
 
     <a href="{% url 'exchange' %}">Продолжить выбор купонов</a><br>
-
+    {% if total_price <= scores %}
     <a href="{% url 'cart:add_prises' %}">Оформить покупку</a>
+    {% else %}
+    <p>Недостаточно очков для покупки! </p>
+    {% endif %}
 
 </body>
 

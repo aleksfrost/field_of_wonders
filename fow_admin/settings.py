@@ -112,6 +112,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR/"uploads/"
+
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True

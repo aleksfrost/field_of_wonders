@@ -115,7 +115,7 @@ class CategorieCreateView(CreateView):
 
     model = Categories
     template_name = 'db_admin/categorie_update.html'
-    fields = ['categorie_name']
+    fields = ['categorie_name', 'categorie_img']
 
     success_url = reverse_lazy('db_admin:categorie_list')
 
@@ -124,7 +124,7 @@ class CategorieUpdateView(UpdateView):
 
     model = Categories
     template_name = 'db_admin/categorie_update.html'
-    fields = ['categorie_name']
+    fields = ['categorie_name', 'categorie_img']
 
     success_url = reverse_lazy('db_admin:categorie_list')
 

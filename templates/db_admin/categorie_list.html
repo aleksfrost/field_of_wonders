@@ -8,6 +8,9 @@
 <ul class="prises-list">
 	{% for obj in object_list %}
     <li class="prises-item">
+        {% if obj.categorie_img %}
+            <img class="prises_img" src="{{obj.categorie_img.url}}">
+        {% endif %}
         <p>ID категории: {{ obj.categorie_id }}</p>
         <p>{{ obj.categorie_name }}</p>
         <p><a class="buy-now-button" href="{% url 'db_admin:categorie_update' obj.categorie_id %}">Изменить</a></p>

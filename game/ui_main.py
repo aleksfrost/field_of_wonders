@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Field of wonders")
+        self.setWindowTitle("Поле чудес")
 
         #main store
         self.user_box: list[users.User] = []
@@ -72,8 +72,8 @@ class MainWindow(QMainWindow):
 
         #Login, NewGame fields
         self.login_label = QLabel("  ")
-        self.game_button = QPushButton("New game")
-        self.login_button = QPushButton("Login")
+        self.game_button = QPushButton("Новая игра")
+        self.login_button = QPushButton("Логин")
 
         header_layout.addWidget(self.login_label, 0, 3, 1, 1)
         header_layout.addWidget(self.game_button, 1, 3, 1, 1)
@@ -162,8 +162,8 @@ class MainWindow(QMainWindow):
 
         #Bottom layout
 
-        self.bottom_label = QLabel("To see ratings, to spend scores, etc")
-        self.rating_button = QPushButton("Ratings")
+        self.bottom_label = QLabel("Реитинг, очки, и пр.")
+        self.rating_button = QPushButton("Рейтнг")
         self.rating_button.clicked.connect(self.ratings_game)
         bottom_layout.addWidget(self.bottom_label)
         bottom_layout.addWidget(self.rating_button)
@@ -191,7 +191,6 @@ class MainWindow(QMainWindow):
         self.bottom_label.show()
 
     def new_game(self):
-        print("NEW GAME")
         self.turn_button.show()
         self.the_drum.show()
         self.guess_hide()
@@ -210,7 +209,7 @@ class MainWindow(QMainWindow):
         self.turn_button.hide()
         self.guess_show()
         if self.game_data.ground.round_score:
-            self.drum.setText(f"{self.game_data.ground.round_score} points")
+            self.drum.setText(f"{self.game_data.ground.round_score} очка(-ов)")
         else:
             self.drum.setText(self.game_data.ground.round_prise)
             dlg = CustomDialog("Приз!", f"{self.game_data.ground.round_prise}\nЗабрать и закончить игру?")

@@ -50,6 +50,12 @@ def add_user(name: str, password: str) -> User:
 #Авторизация
 def auth_user(name: str, password: str) -> User:
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    print(name)
+    print(hashed_password)
+    stmnt = f"select * from users"
+    res = request_from_db(stmnt)
+    for r in res:
+        print(*res)
     if name == "":
         name = 'guest'
         password = 'guest'

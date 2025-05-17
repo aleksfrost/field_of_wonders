@@ -24,7 +24,7 @@ class StatisticsWindow(QDialog):
         super().__init__()
         self.lines = len(stats)
         self.rows = len(stats[0])
-        self.setWindowTitle("Statistics")
+        self.setWindowTitle("Статистика")
         self.stats = QTableWidget(self.lines, self.rows)
 
         self.stats.setHorizontalHeaderLabels(("Игрок", "Очки", "Победы"))

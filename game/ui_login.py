@@ -21,16 +21,16 @@ class LoginWindow(QDialog):
     """
     def __init__(self, user_box):
         super().__init__()
-        self.setWindowTitle("Login")
-        self.login_label = QLabel(f"Login:")
+        self.setWindowTitle("Логин")
+        self.login_label = QLabel(f"Логин:")
         self.login_edit = QLineEdit()
         self.login_edit.setPlaceholderText('Введите логин...')
-        self.pass_label = QLabel(f"Password:")
+        self.pass_label = QLabel(f"Пароль:")
         self.pass_edit = QLineEdit()
         self.pass_edit.setPlaceholderText('Введите пароль...')
 
         self.ok_button = QPushButton("OK")
-        self.cancel_button = QPushButton("Cancel")
+        self.cancel_button = QPushButton("Отмена")
 
         login_layout = QGridLayout()
         buttons_layout = QHBoxLayout()
@@ -62,7 +62,7 @@ class LoginWindow(QDialog):
         password = self.pass_edit.text()
         result = users.auth_user(login, password)
         if result == "err":
-            ui_message.warning_window("Login err", "Incorrect password")
+            ui_message.warning_window("Ошибка входа", "Неправильный пароль")
         else:
             self.user_box.append(result)
             self.close()

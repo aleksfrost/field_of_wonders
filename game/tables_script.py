@@ -142,6 +142,7 @@ CREATE TABLE IF NOT EXISTS public.categories
 (
     categorie_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     categorie_name character varying COLLATE pg_catalog."default",
+    categorie_img character varying(100) COLLATE pg_catalog."default",
     CONSTRAINT categorie_pkey PRIMARY KEY (categorie_id)
 );
 
@@ -469,6 +470,19 @@ INSERT INTO scores(score)
     (90),
     (100);
 
+
+INSERT INTO cards(card_id)
+	VALUES
+    (100001),
+    (100002),
+    (100003),
+    (100004),
+    (100005),
+    (100006),
+    (100007),
+    (100008),
+    (100009),
+    (1000010);
 
 INSERT INTO categories(categorie_name)
 	VALUES

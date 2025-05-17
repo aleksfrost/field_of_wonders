@@ -3,11 +3,22 @@ from psycopg2 import Error
 
 #DB parametres to conect to DB
 
-USER = 'yacu'
-PASS = 'leonid'
-HOST = '127.0.0.1'
-DB_NAME = 'field_of_wonders'
-PORT = '5432'
+# USER = 'yacu'
+# PASS = 'leonid'
+# HOST = '127.0.0.1'
+# DB_NAME = 'field_of_wonders'
+# PORT = '5432'
+
+#conn_url
+# postgresql://uexpm5qfixhcxfjwp50k:6aFidgcZOm092zulJ0hQxKZwnPPot9@bal1qddamd6nblnqo8em-postgresql.services.clever-cloud.com:5432/bal1qddamd6nblnqo8em
+
+HOST = "bal1qddamd6nblnqo8em-postgresql.services.clever-cloud.com"
+DB_NAME = "bal1qddamd6nblnqo8em"
+USER = "uexpm5qfixhcxfjwp50k"
+PASS = "6aFidgcZOm092zulJ0hQxKZwnPPot9"
+PORT = "5432"
+
+
 
 conn =  psycopg2.connect(
     user=USER,

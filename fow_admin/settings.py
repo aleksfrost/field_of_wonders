@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pm)938#kw8mfpcv#eli+)(p$l12&h61m4--w=4h)52)sux-35%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['aleksfrost.pythonanywhere.com']
 
 
 # Application definition
@@ -77,14 +77,23 @@ WSGI_APPLICATION = 'fow_admin.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
+    #'default': {
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'NAME': 'field_of_wonders',
+    #    'USER': 'yacu',
+    #    'PASSWORD': 'leonid',
+    #    'HOST': '127.0.0.1',
+    #    'PORT': '5432',
+    #},
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'field_of_wonders',
-        'USER': 'yacu',
-        'PASSWORD': 'leonid',
-        'HOST': '127.0.0.1',
+        'NAME': 'bal1qddamd6nblnqo8em',
+        'USER': 'uexpm5qfixhcxfjwp50k',
+        'PASSWORD': '6aFidgcZOm092zulJ0hQxKZwnPPot9',
+        'HOST': 'bal1qddamd6nblnqo8em-postgresql.services.clever-cloud.com',
         'PORT': '5432',
     }
+
 }
 
 
@@ -131,6 +140,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

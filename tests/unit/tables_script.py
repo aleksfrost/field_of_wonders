@@ -41,7 +41,7 @@ ALTER TABLE IF EXISTS public.users_prises DROP CONSTRAINT IF EXISTS users_prises
 
 
 
-DROP TABLE IF EXISTS public.auth_group;
+DROP TABLE IF EXISTS public.auth_group CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.auth_group
 (
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS public.auth_group
     CONSTRAINT auth_group_name_key UNIQUE (name)
 );
 
-DROP TABLE IF EXISTS public.auth_group_permissions;
+DROP TABLE IF EXISTS public.auth_group_permissions CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.auth_group_permissions
 (
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS public.auth_group_permissions
     CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id)
 );
 
-DROP TABLE IF EXISTS public.auth_permission;
+DROP TABLE IF EXISTS public.auth_permission CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.auth_permission
 (
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS public.auth_permission
     CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename)
 );
 
-DROP TABLE IF EXISTS public.auth_user;
+DROP TABLE IF EXISTS public.auth_user CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.auth_user
 (
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS public.auth_user
     CONSTRAINT auth_user_username_key UNIQUE (username)
 );
 
-DROP TABLE IF EXISTS public.auth_user_groups;
+DROP TABLE IF EXISTS public.auth_user_groups CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.auth_user_groups
 (
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS public.auth_user_groups
     CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id)
 );
 
-DROP TABLE IF EXISTS public.auth_user_user_permissions;
+DROP TABLE IF EXISTS public.auth_user_user_permissions CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.auth_user_user_permissions
 (
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS public.auth_user_user_permissions
     CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id)
 );
 
-DROP TABLE IF EXISTS public.cards;
+DROP TABLE IF EXISTS public.cards CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.cards
 (
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS public.cards
     CONSTRAINT cards_pkey PRIMARY KEY (card_id)
 );
 
-DROP TABLE IF EXISTS public.cart_cartitem;
+DROP TABLE IF EXISTS public.cart_cartitem CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.cart_cartitem
 (
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS public.cart_cartitem
     CONSTRAINT cart_cartitem_pkey PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS public.categories;
+DROP TABLE IF EXISTS public.categories CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.categories
 (
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS public.categories
     CONSTRAINT categorie_pkey PRIMARY KEY (categorie_id)
 );
 
-DROP TABLE IF EXISTS public.django_admin_log;
+DROP TABLE IF EXISTS public.django_admin_log CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.django_admin_log
 (
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS public.django_admin_log
     CONSTRAINT django_admin_log_pkey PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS public.django_content_type;
+DROP TABLE IF EXISTS public.django_content_type CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.django_content_type
 (
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS public.django_content_type
     CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model)
 );
 
-DROP TABLE IF EXISTS public.django_migrations;
+DROP TABLE IF EXISTS public.django_migrations CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.django_migrations
 (
@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS public.django_migrations
     CONSTRAINT django_migrations_pkey PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS public.django_session;
+DROP TABLE IF EXISTS public.django_session CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.django_session
 (
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS public.django_session
     CONSTRAINT django_session_pkey PRIMARY KEY (session_key)
 );
 
-DROP TABLE IF EXISTS public.game_rounds;
+DROP TABLE IF EXISTS public.game_rounds CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.game_rounds
 (
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS public.game_rounds
     CONSTRAINT game_rounds_pkey PRIMARY KEY (gr_id)
 );
 
-DROP TABLE IF EXISTS public.games;
+DROP TABLE IF EXISTS public.games CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.games
 (
@@ -213,7 +213,7 @@ CREATE TABLE IF NOT EXISTS public.games
     CONSTRAINT games_pkey PRIMARY KEY (game_id)
 );
 
-DROP TABLE IF EXISTS public.prises;
+DROP TABLE IF EXISTS public.prises CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.prises
 (
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS public.prises
     CONSTRAINT prises_pkey PRIMARY KEY (prise_id)
 );
 
-DROP TABLE IF EXISTS public.rounds;
+DROP TABLE IF EXISTS public.rounds CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.rounds
 (
@@ -236,7 +236,7 @@ CREATE TABLE IF NOT EXISTS public.rounds
     CONSTRAINT rounds_pkey PRIMARY KEY (round_id)
 );
 
-DROP TABLE IF EXISTS public.scores;
+DROP TABLE IF EXISTS public.scores CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.scores
 (
@@ -245,7 +245,7 @@ CREATE TABLE IF NOT EXISTS public.scores
     CONSTRAINT scores_pkey PRIMARY KEY (score_id)
 );
 
-DROP TABLE IF EXISTS public.users;
+DROP TABLE IF EXISTS public.users CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.users
 (
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT users_user_name_key UNIQUE (user_name)
 );
 
-DROP TABLE IF EXISTS public.users_prises;
+DROP TABLE IF EXISTS public.users_prises CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.users_prises
 (
@@ -268,7 +268,7 @@ CREATE TABLE IF NOT EXISTS public.users_prises
     CONSTRAINT users_prises_pkey PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS public.words;
+DROP TABLE IF EXISTS public.words CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.words
 (

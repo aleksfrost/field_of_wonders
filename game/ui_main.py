@@ -1,13 +1,12 @@
-import string
 import sys
 from time import sleep
 from games import get_stats
+from make_path import resource_path
 from ui_stats import StatisticsWindow
 from ui_yes_no_message import CustomDialog
 from ui_message import warning_window
 import users
 from main_game import (create_game,
-                       change_diff,
                        guess_a_letter,
                        guess_the_word,
                        turn_the_drum
@@ -21,23 +20,15 @@ from PyQt6.QtWidgets import (
     QMainWindow,
     QPushButton,
     QHBoxLayout,
-    QStackedLayout,
-    QVBoxLayout,
     QWidget,
     QLabel,
     QLineEdit,
-    QDialog,
-    QFormLayout,
     QGridLayout,
 )
 
 from PyQt6 import QtGui, QtCore
 from PyQt6.QtCore import Qt, QBuffer, QByteArray
 
-import typing
-
-if typing.TYPE_CHECKING:
-    from main_game import GameData
 
 class MainWindow(QMainWindow):
 
@@ -47,7 +38,7 @@ class MainWindow(QMainWindow):
 
         #main store
         self.user_box: list[users.User] = []
-        self.game_data: 'GameData' = None
+        self.game_data = None
 
         cyrillic_lower_letters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
         cyrillic_letters = cyrillic_lower_letters + cyrillic_lower_letters.upper()
@@ -183,7 +174,7 @@ class MainWindow(QMainWindow):
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
 
-        file = open(os.path.curdir + "/game/drum.gif", "rb")
+        file = open(resource_path('drum.gif'), "rb")
         ba = file.read()
         self.buffer = QBuffer()
         self.buffer.setData(ba)
@@ -314,8 +305,10 @@ class MainWindow(QMainWindow):
         self.gues_w_edit.clear()
         self.gues_w_button.hide()
 
+
+
 app = QApplication(sys.argv)
-ico = QtGui.QIcon(os.path.curdir + "/game/fow.ico")
+ico = QtGui.QIcon(resource_path('fow.ico'))
 app.setWindowIcon(ico)
 w = MainWindow()
 w.show()

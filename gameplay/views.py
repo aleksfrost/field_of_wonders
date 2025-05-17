@@ -282,7 +282,6 @@ def statistics_view(request: HttpRequest):
     if user is None:
         pass
     stats = Games.get_games_stats()
-    print(stats)
     context = {'stats': stats}
     return render(request, 'gameplay/statistics.html', context)
 
@@ -311,7 +310,7 @@ def coupons_view(request: HttpRequest):
     scores_to_spend = Users.get_user_stat(user)
     context = {
         'scores': scores_to_spend,
-        'prises': prises,
+        'prises': prises_to_show,
         'user': user.user_name,
     }
     return render(request, 'gameplay/my_coupons.html', context)

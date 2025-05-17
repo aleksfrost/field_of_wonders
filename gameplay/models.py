@@ -44,7 +44,7 @@ class GameRounds(models.Model):
 
 class Games(models.Model):
     game_id = models.AutoField(primary_key=True)
-    letters = models.CharField(max_length=33)
+    letters = models.CharField(max_length=33, default='', null=True, blank=True)
     word = models.ForeignKey('Words', on_delete=models.CASCADE, blank=False, null=False)
     user = models.ForeignKey('Users', on_delete=models.CASCADE, blank=False, null=False)
 
@@ -76,7 +76,6 @@ class Games(models.Model):
             )
             result = cursor.fetchall()
         for res in result:
-            print(res[0])
             if res[0]:
                 return True
         return False
@@ -218,7 +217,6 @@ class Users(models.Model):
                 '''
             )
             spent_scores = cursor.fetchone()
-            print(spent_scores)
             if spent_scores is None:
                 spent_scores = [0]
             cursor.execute(
@@ -236,11 +234,9 @@ class Users(models.Model):
                 '''
             )
             scores_total = cursor.fetchone()
-            print(scores_total)
             if scores_total is None:
                 scores_total = [0]
             scores_to_spend = scores_total[0] - spent_scores[0]
-            print(scores_to_spend)
         return scores_to_spend
 
 
@@ -307,12 +303,11 @@ class Cards(models.Model):
 
     def is_card_spare(card_no):
         card = Cards.get_card(card_no)
-        print(card)
         if card:
             if card.user_id is None:
                 return True
             else:
                 raise ValueError(f"Карта {card_no} уже зарегистрирована")
         else:
-            raise ValueError("Карты с таким номером не существует.")
+            raise ValueError(f"Карты с номером {card_no} не существует.")
 

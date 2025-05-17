@@ -1,11 +1,11 @@
-"""Тестирования графического приложения игры"""
+"""Тестирования работы с базой данных"""
 
 from gameplay.models import Users
 
 import hashlib
 
 
-def test_get_no_users(db_connection):
+def test_get_none_users(db_connection):
     cursor = db_connection.cursor()
     cursor.execute("select * from users")
     result = cursor.fetchone()
@@ -35,3 +35,4 @@ def test_get_all_users(db_connection):
     cursor.execute(f"select * from users")
     result = cursor.fetchall()
     assert len(result) == 2
+

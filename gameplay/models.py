@@ -7,10 +7,8 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 import hashlib
 from django.db import connection, models
-from django.db.models import Count, Sum
+from django.db.models import Count
 import random as rnd
-from django.contrib.auth.models import AbstractUser
-from django.http import HttpResponse
 
 
 

@@ -306,7 +306,7 @@ def coupons_view(request: HttpRequest):
     if user is None:
         return redirect(request, 'statistics')
     prises = Prises.get_my_coupons(user)
-    prises_to_show = prises.sort(key=lambda x: x[0])
+    prises_to_show = sorted(prises, key=lambda x: x[0])
     scores_to_spend = Users.get_user_stat(user)
     context = {
         'scores': scores_to_spend,
